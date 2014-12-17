@@ -1,122 +1,122 @@
 	c-sig FAQL release 3.8  date 1999/06/10
 
-  ����� c-sig �˴ؤ��� FAQ list �Ǥ���
+  これは c-sig に関する FAQ list です。
 
 ----------------------------------------------------------------------
-���� FAQ �� emacs �Ǹ��Ƥ�����ϡ�"M-2 C-x $" �����Ϥ��뤳�Ȥˤ���
-�������ȴ���Ф����Ȥ��Ǥ��ޤ������⸫�������ˤ� "C-x $" �ȥ����פ�
-��Ф�Ȥ����ޤ���
+この FAQ を emacs で見ている場合は、"M-2 C-x $" と入力することにより質
+問だけを抜き出すことができます。答も見たい場合には "C-x $" とタイプす
+ればもとに戻ります。
 
-�����ֹ� X-XX �Ǹ������������Ȥ��ϡ�"M-C-s ^X-XX:" �����Ϥ��Ƥ���������
-�⤷���Ĥ���ʤ��ä��顢³���� "C-r" �ȥ����פ��ƤߤƤ������������䤬
-���Ĥ��ä��� ESC �򥿥��פ���ȸ����⡼�ɤ���ȴ�����ޤ���
+質問番号 X-XX で検索しいたいときは、"M-C-s ^X-XX:" と入力してください。
+もし見つからなかったら、続けて "C-r" とタイプしてみてください。質問が
+見つかったら ESC をタイプすると検索モードから抜けられます。
 ----------------------------------------------------------------------
 
-c-sig ����
+c-sig 全般
 
-A-1:c-sig �Υޥ˥奢��äƤ��äѤ�ʬ����ʤ���Ǥ����ɡ�
+A-1:c-sig のマニュアルってさっぱり分からないんですけど。
   
-  ���ޤ󤳤äƤ�������⤢��ޤ���
-  ���䡢����ʤ�����ϤϤ��Ƥ����Ǥ����ʤˤ�����ǫ�˽񤯤Τ����ݤǡġġ�
-  ������������ʤ��äơ����á����Ρġġ�
-  �����ʤ��������Υ�꡼���ǤϤ��ä���񤭤ޤ���
+  すまんこってす。一言もありません。
+  いや、それなりに努力はしているんですがなにしろ丁寧に書くのは面倒で……。
+  あ、そうじゃなくって、そっ、その……。
+  ごめんなさい。次のリリースではしっかり書きます。
 
-A-2:c-sig �� FAQ list �äƤʤ�Ǥ���ʤ˹��ܤ����ʤ��Ρ�
+A-2:c-sig の FAQ list ってなんでこんなに項目が少ないの？
   
-  ��Ԥ���ͤǤ��ä����ä�����Ǥ�������ʾ岿��񤤤��ɤ��Τ��פ���
-  ���ʤ��ä��ΤǤ�������ʾ���ɬ�פ��ȶ�����ĺ���д����ɲä��ޤ���
+  作者が一人でこっそり作ったからです。これ以上何を書いて良いのか思い付
+  かなかったのです。こんな情報が必要だと教えて頂けば喜んで追加します。
 
-A-3:signature �� sig ��ά���Τ��ɤ��ʤ��󤸤㤢��ޤ��󤫡�
+A-3:signature を sig と略すのは良くないんじゃありませんか？
   
-  ʬ��ޤ��󡣤����� c-sig �ˤϴط�����ޤ���c-sig �ϡ֤��㡼��ȥ�
-  ���ͥ���򤤤�ʤ��ȶ�簭������פ�ά�Ǥ�����ġ�
+  分りません。しかし c-sig には関係ありません。c-sig は「ちゃーんとシ
+  グネチャをいれないと具合悪いぜよ」の略ですから…。
 
-A-4:c-sig �Ϻǹ�Ǥ�������ɥ͡�����󤷤����Τ�������򶵤��Ƥ���������
+A-4:c-sig は最高です。是非ドネーションしたいので送り先を教えてください。
   
-  ���򤬤���褦�Ǥ��͡��ǹ�ʤΤ� c-sig �ǤϤʤ��ơ�emacs �Ǥ���
-  �Ǥ����顢���դ򤹤�ʤ��¤鷺 FSF �ˤ��ޤ��礦������ꥫ�ޤǤ����
-  ����Τ����ݤ��Ȥ����ͤϴ��դδޤޤ�Ƥ��� GNU ��Ϣ�ν��Ҥ�ãĤ��
-  ����Ĥ��㤤�ޤ��礦��
-  �������������Τ���������ʤ������㤢����Τ褦�˥���������դ��ޤ���
-  ����
+  誤解があるようですね。最高なのは c-sig ではなくて、emacs です。
+  ですから、寄付をするなら迷わず FSF にしましょう。アメリカまでお金を
+  送るのが面倒だという人は寄付の含まれている GNU 関連の書籍やＣＤやＴ
+  シャツを買いましょう。
+  え？そういうのが見当たらない？じゃあ、私のようにソースを寄付しましょ
+  う。
 
-A-5:c-sig �κ�Ԥ� shibata@sgi.co.jp ���ä�ʹ����������ɡġġ�
+A-5:c-sig の作者は shibata@sgi.co.jp だって聞いたんだけど……。
   
-  ����ޤ��󡣰����ΥС������Ϥ��Υ��ɥ쥹�Ǹ���������Ǥ��������Ϥ�
-  �Υ��ɥ쥹�Ϥ�  ��̵���Ǥ���
-  ͭ�����ä��Ȥ��Ƥ��̿ͤ��Ϥ��ޤ���kshibata@tky.3web.ne.jp ��ȤäƤ�
-  ��������
-  jisx0201.el �� han-kata.el �˴ؤ�������ʲ����줢��С˾�Υ��ɥ�
-  �������äƤ���������
+  すんません。以前のバージョンはそのアドレスで公開したんですが、今はそ
+  のアドレスはも  う無効です。
+  有効だったとしても別人に届きます。kshibata@tky.3web.ne.jp を使ってく
+  ださい。
+  jisx0201.el と han-kata.el に関する質問も（億が一あれば）上のアドレ
+  スに送ってください。
 
-c-sig ������
+c-sig の設定
 
-B-1:insert-signature-automatically �Ǥ��Ĥ����ν��֤� signature ����
-    ���Ƥ��ޤ���Ǥ����ɡġ�
+B-1:insert-signature-automatically でいつも固定の順番で signature がつ
+    いてしまうんですけど…。
   
-  (random t) �� .emacs ������ޤ��礦��
+  (random t) を .emacs に入れましょう。
 
-B-2:�����ͥ������ʸ����μ�ư�Ѵ���ǽ�������ʤ���Ǥ����ɡ�
+B-2:シグネチャ内の文字列の自動変換機能が効かないんですけど…
   
-  �����餯 (setq sig-replace-string t) ����Τ�˺��Ƥ���Τ��Ȼפ���
-  ����.emacs �˾嵭������򤤤�Ƥ���������
+  おそらく (setq sig-replace-string t) するのを忘れているのだと思いま
+  す。.emacs に上記の設定をいれてください。
 
-B-3:.signature �� .signature-fj �ˤ��� signature ��������������Ǥ���
-    �ɡ�
+B-3:.signature や .signature-fj にある signature を挿入したいんですけ
+    ど…
   
-  c-sig �ˤϤǤ��ޤ���c-sig �� signature �ǡ����١�����̾���� 
-  signature ���ݴɤ��Ƥ����ơ�����̾���� signature ��������ޤ���
-  ���Ǥ� signature �򤤤������ʥե�����˺������Ƥ��ޤäƤ���ͤ� 
-  add-signature �ǿ����� signature ����Ͽ����Ȥ��ˤ�����ɹ���Ǥ���
-  ������
+  c-sig にはできません。c-sig は signature データベースに名前と 
+  signature を保管しておいて、その名前で signature を管理します。
+  すでに signature をいろいろなファイルに作成してしまっている人は 
+  add-signature で新しい signature を登録するときにそれを読込んでくだ
+  さい。
 
-B-4:signature ����������Τ���Ԥ���������������Ǥ����ġ�
+B-4:signature がカーソルのある行の前に挿入されるんですが…。
   
-  ���ͤǤ����᡼��κǸ�� signature �������������ͤ�
-  sig-insert-end �� t �����ꤷ�Ƥ���������
+  仕様です。メールの最後に signature を挿入したい人は
+  sig-insert-end に t を設定してください。
 
 
-�����٤� c-sig �λȤ���
+より高度な c-sig の使い方
 
-C-1:����οͤ˥������ signature ���դ�������Ǥ��ɡġ�
+C-1:特定の人にランダムな signature を付けたいんでけど…。
   
-  �ޤ� sig-search-functions �κǸ�� sig-get-random-signature ���ɲä�
-  �ޤ���
-  ����Ū�ˤ� .emacs �˼��������񤭲ä��ޤ���
+  まず sig-search-functions の最後に sig-get-random-signature を追加し
+  ます。
+  具体的には .emacs に次の設定を書き加えます。
   
   (setq sig-search-functions
         (list 'sig-search-name-alist 'sig-search-regexp
               'sig-get-random-signature))
   
-  ɬ�פǤ���� sig-random-sig-list �� signature ̾�Υꥹ�Ȥ����ꤷ�Ʋ�
-  ������sig-get-random-signature �Ϥ����椫�������� signature ����
-  �򤷤ޤ���
+  必要であれば sig-random-sig-list に signature 名のリストを設定して下
+  さい。sig-get-random-signature はこの中からランダムに signature を選
+  択します。
   
-  ���ˡ�sig-name-alist �� sig-regexp-alist �˺ٹ��򤷤ޤ����㤨�� 
-  kshibata@tky.3web.ne.jp �˥������ signature �����ꤿ���ΤǤ����
-  �ʲ��ΰ�Ԥ� sig-name-alist �� sig-regexp-alist �������˲ä��Ʋ�������
+  次に、sig-name-alist と sig-regexp-alist に細工をします。例えば 
+  kshibata@tky.3web.ne.jp にランダムな signature を送りたいのであれば
+  以下の一行を sig-name-alist と sig-regexp-alist の双方に加えて下さい。
   
   	("kshibata@tky.3web.ne.jp" . nil)
   
-  ���η�̡��ؽ��ǡ����١����Ǥ�����ɽ�������Ǥ��̤Ȥ��� nil ���֤�
-  ���Ȥˤʤ�ޤ���nil �ϡ�ȯ���Ǥ����פȤ�����̣�Ǥ��ΤǼ��θ����ե���
-  ���˰ܤꡢ�ǽ�Ū�˥������ signature ���դ����Ȥˤʤ�ޤ���
-  �����������ѤȤ��ơ��ؽ��ǡ����١������鸫�Ĥ���ʤ��ä��ͤˤ����
-  ��� signature ���Ĥ��Ƥ��ޤ��ޤ����ޤ�������ϰ��ɤȤ������ȤǴ���
-  ���Ƥ���������
+  この結果、学習データベースでも正規表現検索でも結果として nil が返る
+  ことになります。nil は「発見できず」という意味ですので次の検索フェイ
+  ズに移り、最終的にランダムな signature が付くことになります。
+  ただし副作用として、学習データベースから見つからなかった人にもランダ
+  ムに signature がついてしまいます。まあ、それは愛敬ということで勘弁
+  してください。
 
-C-2:����οͤˤ� signature ���դ������ʤ���Ǥ����ɡġ�
+C-2:特定の人には signature を付けたくないんですけど…。
   
-  ���ơ��᡼�������ȸ��äƾ�� signature ��Ĥ���Ȥϸ¤�ޤ�����
-  �������ʤ����⤢��Ǥ��礦��insert-signature-* �򥭡��˥Х���ɤ���
-  ��ư�� signature ��Ĥ��Ƥ���֤��ɤ��ΤǤ�����hook �ʤɤ����Ѥ��Ƽ�
-  ưŪ�� signature ���ղä���褦�ˤ�����硢�֤��οͤˤϤĤ��ʤ��פ�
-  �������꤬ɬ�פˤʤ�ޤ���
-  ���Τ���ˤϤޤ��ֶ��� signature�פ�������ޤ���add-signature �ǲ���
-  ���Ϥ�������Ͽ����ȡֶ��� signature�פ���Ͽ�Ǥ��ޤ�����̾����Ŭ����
-  ���Ʋ���������
-  c-sig �Ǥ϶��� signature �����򤵤줿���� signature �����������Ϲ�
-  �ʤ��ޤ��󡣡�sig-separator ���ղä���ޤ��󡣡�
-  ��������sig-purge-void-lines �����ꤵ��Ƥ������ mail ����;ʬ��
-  ���ԤϺ������ޤ���
-  �Ǥ⤽�줬�����ä��硩
+  さて、メールだからと言って常に signature をつけるとは限りません。付
+  けたくない時もあるでしょう。insert-signature-* をキーにバインドして
+  手動で signature をつけている間は良いのですが、hook などを利用して自
+  動的に signature を付加するようにした場合、「この人にはつけない」と
+  いう設定が必要になります。
+  そのためにはまず「空の signature」を作成します。add-signature で何も
+  入力せずに登録すると「空の signature」を登録できます。（名前は適宜付
+  けて下さい。）
+  c-sig では空の signature が選択された場合は signature の挿入処理は行
+  なわれません。（sig-separator も付加されません。）
+  ただし、sig-purge-void-lines が設定されている場合は mail 末の余分な
+  改行は削除されます。
+  でもそれがいいっしょ？
