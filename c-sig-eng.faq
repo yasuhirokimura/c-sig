@@ -1,0 +1,138 @@
+	c-sig FAQL release 3.8  date 1999/06/10
+
+  This is FAQ list for c-sig.
+
+----------------------------------------------------------------------
+If you are reading this FAQ using emacs,
+type "M-2 C-x $" to see only questions. Type "C-x $" to see answer.
+
+If you want to search question using number line "X-XX", type "M-C-s
+^X-XX". (If you can not find it, type "C-r".)
+When you find questin, type ESC to exit from search mode.
+----------------------------------------------------------------------
+
+General
+
+A-1:Documant for c-sig is really heard to understand, why?
+  
+  At first, I have a question. Can you understand English?
+  If yes, sorry about that.
+  I loundly cry "I did my best!", but I know my English is reaaaaly
+  far from easy to understand.
+  I suggest 3 thing.
+  No 1 Learn Japanese
+  Since I am Japanese, Japanese documents are much better.
+  No 2 Make friend who can understand Japanese.
+  Same reason with above.
+  No 3 Send me a question in English.
+  I promize I will try to explain with my best effort, but you may
+  need patience like teachers in elementary school.
+  Oh, I have one more idea.
+  No 4 Introduce me a free and good translator.
+  This will make everyone happy.
+
+A-2:Why FAQL for c-sig have only a few questions?
+  
+  Because c-sig is perfect. There are only a few questions.
+  No, I am liar. Of course, c-sig is not perfect.
+  I also want to know why I got only a few questions.
+  Ha? you say there must be only a few users? I don't like you.
+
+A-3:I thought abbreviation of "signature" is "sign", why are you using
+      "sig" instead of "sign".
+  
+  I don't matter it. In fact, it is none of my bussiness because "sig"
+  of "c-sig" is not abbreviation of "signature". It is "Chaanto
+  Signature wo Irenaito Guaiga waruizeyo". ("Too bad if you don't insert
+  a signature properly" in Japanese.)
+
+A-4:c-sig is great. I want to make a donation to you. Please let me
+    know your bank account.
+  
+  You are in bad confusion. The great thing is not c-sig, it must be
+  GNU emacs or GNU itself.
+  If you want to make a donation, do it to FSF! If it is hard for you
+  to send money to US, buy any GNU products. (books, CDs or T shirts)
+  If you can not find any of them, don't worry. You can donate source
+  code like me.
+
+A-5:I heard c-sig is made by "shibata@sgi.co.jp"
+  
+  Oh, no! I have released previous version of c-sig using the
+  address, but it is not valid now. 
+  Even it is valid, it is not my address. Please use
+  kshibata@tky.3web.ne.jp instead.
+  If you have question about jisx0201.el or han-kata.el, please use
+  above address as well. (I guess no one uses these lisps though)
+
+Setting.
+
+B-1:I am using "insert-signature-automatically", but signatures
+    appears in fixed order every time.
+  
+  put (random t) to ~/.emacs.
+
+B-2:I want to change strings in my signatures, but I can't.
+  
+  Maybe you forgot to do (setq sig-replace-string t).
+  Put it in ~/.emacs
+
+B-3:I want to use signatures in .signature or .signature-alt.
+  
+  Sorry, c-sig can not use it.
+  All signatures for c-sig need to be in database.
+  You can import your old signatures by C-x C-i while making new
+  signatures for c-sig using "add-signature".
+
+B-4:A signature is inserted just before current line.
+  
+  This is by design.
+  If you want to insert a signature at the end of mail, set t to
+  sig-insert-end.
+
+Advanced c-sig
+
+C-1:I want to use a random signature for specific person.
+  
+  At first, add "sig-get-random-signature" at the end of
+  "sig-search-funcions" list.
+  Add following statement to ~/.emacs.
+  
+  (setq sig-search-functions
+        (list 'sig-search-name-alist 'sig-search-regexp
+              'sig-get-random-signature))
+  
+  If you want, set list of signature names to
+  "sig-random-sig-list". c-sig select a signature from the list, when
+  it need to select a signature randomly.
+  
+  Next, modify "sig-name-alist" and "sig-regexp-alist" For example, If
+  you want to use a random signature for kshibata@tky.3web.ne.jp, add
+  this line to both "sig-name-alist" and "sig-regexp-alist".
+  
+  	("kshibata@tky.3web.ne.jp" . nil)
+  
+  By this, retrieval return for both learning database and reguler
+  expression dabase will be nil, and nil means "not found".
+  So c-sig calls final function in sig-search-functions.
+  This modify affects to person who can not find in your database, you
+  will see a random signature for them. (Sorry about that.)
+
+C-2:I don't want to add a signature for specific people.
+  
+  I know you don't want to add a signature for all mails, you should
+  have some mail addresses which you don't send your funny (sory
+  artistic) signature.
+  When you are binding c-sig function to key to insert a
+  signature. Just not type the key not to insert a signature. But if
+  you are using hook to insert a signature... Pray God to be selected
+  a proper signature.
+  Or do following steps.
+  At first make an empty signature. When you write nothing on
+  "add-signature", you can get an empty signature. (You need to
+  name it, even it is empty.)
+  When an empty signature is selected, c-sig doesn't do
+  anything. (don't add sig-separator as well.)
+  Only exception is "sig-purge-void-lines", if you set it, blank lines
+  at the end of mails are removed.
+  It is what you want, right?

@@ -1,0 +1,504 @@
+	c-sig ユーザーズガイド (release 3.8  date 1999/06/10)
+
+		目次
+
+１．	c-sig って何？
+２.	インストールの手引
+３.	使用方法
+３.１		insert-signature-eref の操作
+３.２		signature の学習
+３.３		正規表現によるデフォルトの signature の検索
+３.４		デフォルトの signature の決定方法
+３.５		signature 内の文字列の自動変換
+４.	使用できる関数の一覧
+５.	設定できる変数の一覧
+６.	設定できる関数の一覧
+７.	配布についてのお願い
+８.	後書き
+
+
+１. c-sig って何？
+
+  c-sig とはなんでしょう？c-sig も最初はただの「signature の選択挿入す
+る lisp」でした。しかし「あんなこともしたい」、「こんなこともしたい」
+といろいろな人の意見を採り入れているうちに「ウルトラ・スーパー・デラッ
+クスな signature の挿入プログラム」になってしまいました。
+
+  どこがウルトラ・スーパー・デラックスなのかを、セールスポイントをあげ
+ることで説明しましょう。
+
+・signature の登録を対話型でできる。
+
+  c-sig には signature の登録関数 add-signature と削除関数 delete-signature 
+が附属しています。ユーザはこの関数を使用することで対話的に signature 
+を作成することができます。
+  また add-signature で新しい signature を作成中に既存の signature を
+引用することができます。
+
+・いろいろな挿入関数がある。
+
+  c-sig には現在のところ３種類の挿入関数が用意されています。signature 
+を対話型に選択する insert-signature-eref、データベースからの検索結果に
+従い自動的に挿入する insert-signature-automatically、ランダムに挿入す
+る insert-signature-randomly です。
+
+・強力な検索機能、学習機能を持っている。
+
+  c-sig には特定の field を正規表現で検索し一致した signature を選択す
+る機能および実際に選択した signature を学習し、次からそれが選択される
+機能を持っています。
+  また、正規表現が分からないひとでも学習機能さえ生かせばかなり賢い選択
+が可能です。
+
+・挿入する signature 内の文字列を挿入時に変換できる。
+
+  c-sig では挿入しようとする signature の中の特定の文字列を挿入時に、
+別の文字列や、特定のリストの中からランダムに選択した文字列に変換するこ
+とができます。アドレスや所属を自動的に変換したり、好きな言葉を引用する
+ときに便利です。
+
+・挿入する signature を elisp で処理することができる。
+
+  c-sig では挿入しようとする signature を emacs lisp の filter により
+処理することができます。この機能により signature の中でプログラムを起
+動して「今日のできごと」を挿入したり、より高度な置換処理を入れることが
+可能です。
+
+
+  どうです。c-sig が「ウルトラ・スーパー・デラックス」であるということ
+がお分かりいただけたでしょうか？
+  何？まだ機能が不足している？もしそういう方がいらっしゃいましたら作者
+まで是非御一報ください。
+
+
+２. インストールの手引
+
+  まず ~/.emacs で以下の関数の autoload を設定してください。最後の３行
+は使用するものだけでも構いません。
+  さらに、必要に応じて write-sig-file や read-sig-file なども autoload 
+してもよいでしょう。
+
+(autoload 'add-signature "c-sig" "c-sig" t)
+(autoload 'delete-signature "c-sig" "c-sig" t)
+(autoload 'insert-signature-eref "c-sig" "c-sig" t)
+(autoload 'insert-signature-automatically "c-sig" "c-sig" t)
+(autoload 'insert-signature-randomly "c-sig" "c-sig" t)
+
+  この設定だけでも一応 c-sig を使用することは可能ですが、いちいち M-x
+insert-signature-eref と入力するのは面倒ですので、キーにバインドしよう
+という話になります。
+  global-set-key でどかんと設定しても大丈夫は大丈夫ですが、分かるので
+あれば使用するメーラやニュースリーダのしかるべき hook で local に設定
+するのが良いでしょう。
+  たとえば mh-e では mh-letter-mode-hook を rmail は mail-mode-hook を 
+gnus では news-setup-hook が妥当だと思います。
+　hook ってなに？キーにバインドって何？という人はあまり無理しないほう
+が良いです。ベストなのは「同じ環境の人から .emacs をもらう」です。これ
+は emacs lisp がわからない人には多くの場合もっとも有効な手段です。
+
+  gnus では .signature と .signature-* というファイルから signature を
+自動的に付加しようとします。これは gnus-signature-file に nil を設定す
+ることで防ぐことができますが、.signature* というファイルがホームディレ
+クトリにたくさんあるのもなんなので、ここはすっぱりその手のファイルを削
+除してしまいましょう。.signature-* でできる設定は c-sig ですべて行なう
+ことが可能です。
+
+  insert-signature-randomly などの乱数を使う機能を使う人は ~/.emacs に 
+(random t) も入れておきましょう。そうしないとランダムなはずなのにいつ
+も同じ signature が挿入されてしまいます。（新しい emacs だといらないか
+も。^_^;）
+
+
+３．使用方法
+
+３.１ insert-signature-eref の操作
+
+  insert-signature-eref は対話型に signature を挿入する関数です。この
+関数を実行すると *sig-buffer* というバッファが表示され、そこにデフォル
+トの signature が表示されます。（デフォルトの signature の検索ロジック
+に関しては後で説明します。）
+
+  *sig-buffer* でのキー割り当て
+
+	p	一つ前の signature の表示
+	P	一つ前の signature の表示
+	n	次の signature の表示
+	N	次の signature の表示
+	q	signature の挿入の中止
+	Q	signature の挿入の中止
+	RET	表示中の signature の挿入
+	x	表示中の signature の挿入
+	X	表示中の signature の挿入
+
+  insert-signature-eref を引数付きで起動した場合（例えば、C-u M-x
+insert-signature-eref、あるいは C-u <割り当てたキー>）、挿入した 
+signature は signature list の先頭に移動されます。これを繰り返すことに
+より signature list の順番を変更することができます。
+
+
+３.２ signature の学習
+
+  insert-signature-eref で最初に表示されたデフォルトの signature 以外
+を挿入し、かつ変数 sig-save-to-sig-name-alist が non-nil の場合、次か
+らこの signature がデフォルトになるように address と signature 名の対
+応をデータベースに格納することが可能です。
+  新しい signature を挿入すると mini buffer に "Regster this signature
+for XXXXXX ? (y or n) " と表示されます。ここで y を入力すればデータベー
+スへ格納されます。既にデータベースに入っているアドレスに別の signature
+を選択した場合もこのメッセージを聞いてきますのでデータベースの更新が可
+能です。
+
+
+３.３ 正規表現によるデフォルトの signature の検索
+
+  sig-regexp-alist という変数にデータを設定することにより正規表現によ
+りデフォルトの signature を設定することが可能です。
+
+   sig-regexp-alist は以下のような形式です。（alist といいながら alist 
+ではありません。_o_）
+
+       ((<Field 名>
+	 (<正規表現> . <signature 名>)
+		…
+	 (<正規表現> . <signature 名>))
+		…
+	(<Field 名>
+	 (<正規表現> . <signature 名>)
+		…
+	 (<正規表現> . <signature 名>)))
+
+  普通 Field 名には "To" とか "Newsgroups" を設定することになります。
+（もちろん他の field 名も指定できますが、意味があるかどうか…。）
+  Field 内の文字列はアドレスであると仮定しているので "," をセパレータ
+として分割した後、正規表現とマッチングをとります。検索順もこのリストの
+順に行ないますから、より細かい正規表現を前に、おおざっぱなものを後に記
+述してください。
+
+例） "jp$" と "foo.bar.jp$" と記述したい場合は "foo.bar.jp$" を先に記述
+     しないと "jp$" に先にマッチしてしまいます。
+
+  sig-regexp-alist は ~/.signature.alist に格納されています。変数を設
+定する時に注意して欲しいのは sig-regexp-alist はメモリにも常駐していて
+（設定により）終了時に上書きされる可能性があることです。そこでファイル
+を書き換える前に現在のデータを write-sig-file で保管してください。
+write-sig-file はデータが更新されていず、不要なときは保存を行いません
+から気軽に行ってください。そして、ファイルに対する修正が終ったら 
+read-sig-file を実行して変更内容を読み込んでください。
+
+
+３.４ デフォルトの signature の決定方法
+
+  前の節でも少し触れましたが、デフォルトの signature の決定方法に関し
+てもう少し詳細を説明します。
+  デフォルトの signature は変数 sig-search-functions に格納されている
+関数を順番に呼びだすことで行なわれます。
+  標準の設定では「学習データベースの検索」→「正規表現データベースの検
+索」→「sig-default-name に設定されている signature 名」→「signature 
+のリストの先頭のもの」という順番になっています。
+  学習データベースは "To" と "Newsgroup" の field から "," をセパレー
+タとしてアドレスないしは news group 名を切り出してきてそれらがデータベー
+ス内の文字列と一致するかどうかを調べます。一致した場合は対応する 
+signature 名を戻し検索を終了します。
+  学習データベース内に見つからなかった場合は正規表現データベースを検索
+にいきます。こちらはデータベース内に検索する field 名がありますからそ
+の field 内でのみ検索を行ないます。
+
+  sig-search-functions の拡張例として sig-get-random-signature という
+関数が用意されています。これを sig-search-functions の最後に追加した場
+合、検索順が「学習データベースの検索」→「正規表現データベースの検
+索」→「ランダムな signature」という順番になります。
+  つまり、検索で一致しない場合ランダムなシグネチャが与えられると言うこ
+とになるわけです。しかし、実際には「特定のアドレスにランダムな 
+signature を使いたい」という場合が多いはずです。そういう人は c-sig.faq 
+の「C-1:特定の人にランダムな signature を付けたい」を見てください。
+
+
+３.５ signature 内の文字列の自動変換
+
+  例えば、自分のアドレスがしょっちゅう変わるとか自分の所属がしょっちゅ
+う変わるという人は c-sig で作った膨大な signature を全て書き換えるのは
+大変面倒です。(私のことじゃないっすよ。）
+  c-sig ではそういう激しい人のために、あらかじめ signature には 
+%%my-address%% とか <<my-shozoku>> というような文字列を入れておいてそ
+れを挿入時に変換するという機能を持っています。
+  この文字列の自動変換機能はデフォルトでは無効になっています。有効にす
+るには .emacs などに下記の一行を追加してください。
+
+(setq sig-replace-string t)
+
+    変換文字列は ~/.signature.replace (sig-replace-string-file で変更可
+能)の中で sig-replace-list を設定することで行います。
+  sig-replace-list は以下のような形式です。
+
+	(
+	 ( <変換元の文字列> ( <変更する文字列>
+			      <変更する文字列>
+				…
+			      <変更する文字列> ))
+	 ( <変換元の文字列> ( <変更する文字列>
+			      <変更する文字列>
+				…
+			      <変更する文字列> ))
+		…
+	)
+
+  変更する文字列が複数指定されている場合はその中の一つをランダムに選択
+します。
+  以下に sig-replace-list の設定例をのせます。参考にしてください。
+
+(setq sig-replace-list '(
+("%%my-address%%" 
+  ("kshibata@tky.3web.ne.jp"))
+("<<kotowaza>>" 
+ ("猫に小判"
+  "豚に真珠"
+  "vi ユーザに c-sig"))
+))
+
+
+（注意）insert-signature-eref では表示時でなく、挿入時に変換されます。
+
+  ところでこの置換ですが、ランダムではなく特定の規則で置き換えたいとい
+う人いませんか？もちろんいますね。そういう要望はたくさん来ていますから…。
+  そこでこの replace-list に関数を設定することによりその関数の戻り値を
+挿入するという機能を付け加えてみました。リストの代りに関数名をそのまま
+書いてください。
+  
+(setq sig-replace-list '(
+("%%my-address%%" 
+  ("kshibata@tky.3web.ne.jp"))
+("<<kotowaza>>" 
+ ("猫に小判"
+  "豚に真珠"
+  "vi ユーザに c-sig"))
+("**shiteru-koto**" 
+  shiteru-koto
+))
+
+  この設定により、signature 中の **shiteru-koto** という文字列は 
+shiteru-koto という関数の戻り値に置き換わります。（つまり関数の戻り値
+は文字列である必要があります。）
+  具体的には以下のような関数になります。
+
+(defun shiteru-koto ()
+  (let
+      ((wtime (string-to-number (substring (current-time-string) 11 13))))
+    (cond
+     ((< wtime 9) "睡眠中")
+     ((< wtime 12) "メール購読中")
+     ((< wtime 13) "食事中")
+     ((< wtime 17) "ニュース購読中")
+     (t "ゲーム中"))))
+
+  同じようなやり方で曜日や月で変わる signature も書けます。
+
+
+４. 使用できる関数の一覧
+
+insert-signature-eref
+  signature を選択挿入します。データベースに従ってデフォルトに 
+  signature が表示されますが、n および p キーで選択が可能です。ret で
+  確定して q でキャンセルです。
+  またここで選択した signature が次のデフォルトになるようにデータベー
+  スに登録することも可能です。
+
+insert-signature-randomly
+  signauture をランダムに挿入します。
+
+insert-signature-automatically
+  signature を自動挿入します。
+  挿入される signature は insert-signature-eref でデフォルトになるもの
+  です。
+
+add-signature
+  新しい signature を作成します。
+  実行するとエディタ画面になります。作成後、C-c C-c を押すと signature
+  名を問い合わせてきます。signature 名を入力するとその signature は登
+  録されます。登録をキャンセルする場合は C-c C-q を押してください。
+  また、作成中に C-c C-i を押して既存の signature を呼び出すことができ
+  ます。
+
+delete-signature
+  不要になった signature を削除します。
+  delete-signature を実行すると signature の選択画面になります。n と p
+  で不要の signature を選択し、ret で確定、q でキャンセルします。ret 
+  を押すと確認メッセージが表示されますので y を押して削除してください。
+
+sig-purge-void-lines
+  mail 末の余分な空白行が全て削除し、mail 末に改行コードがない場合は改
+  行コードを一つ挿入します。変数 sig-purge に文字列が設定されていると
+  その文字列を mail 末に挿入します。
+  sig-purge に non-nil が設定されている場合、insert-signature-* はこの
+  関数を自動的に呼び出しますので、通常は使用する必要はありません。
+　この関数はメール発送時に余分な改行を削除したいが別に c-sig を使う気
+  はない、しかも emacs lisp は書きたくないというユーザのために解放され
+  ています。
+
+read-sig-file
+  signature database を読み込みます。signature database をエディタで変
+  更した後はこのコマンドを実行してください。
+
+write-sig-file
+  signature database を必要があれば保管します。singature database をエ
+ディタで変更する前にこのコマンドを実行してください。
+
+
+
+５. ユーザが設定可能な変数
+
+sig-replace-string
+  non-nil （たとえば t)が設定されていると, sig-replace-list で指定され
+  る置換が有効になります。
+  デフォルトは nil
+
+sig-insert-end 
+  non-nil が設定されていると rmail の様に mail 末に signature が挿入さ
+  れます。
+  nil の場合は現在行の前に signature が挿入されます。デフォルトは nil。
+	      ^^^^^^^^^^^^
+sig-purge
+  non-nil が設定されていると mail 末の余分な空白行が全て削除され、mail 
+  末に改行コードがない場合は挿入されます。
+  また、変数の内容が文字列だとその内容が mail 末に挿入されます。
+  デフォルトは t
+
+sig-separator
+  signature に先行して挿入される文字列を指定します。signature の前に一
+  行の空白と "--" を入れたいのであれば "\n--\n" としてください。（行末
+  の \n は自動的には付加されません。）デフォルトは nil
+
+sig-save-to-sig-name-alist
+  non-nil を設定すると、対話型で選択した signature をデータベースに保
+  管することができます。
+  検索された signature と異なる signature を挿入した場合、登録確認メッ
+  セージが表示されますので y と応えるとアドレス名と signature 名の組を
+  データベースに保管します。次の検索からこのデータは有効になります。
+  デフォルトは t
+
+sig-default-name
+  signature の検索に失敗した場合にこの変数に収納されている signature 
+  をデフォルトとして使用します。nil の場合、signature alist の先頭がデ
+  フォルトになります。
+  デフォルトは nil
+
+sig-save-file-every-change
+  non-nil が設定されていると、c-sig は signature database の内容が変更
+  になるたびに情報を save します。nil の場合は kill-emacs 関数を書き換
+  えて終了時に save します。emacs を滅多に終了しない人は t にしておい
+  た方が安全です。
+  デフォルトは t
+
+sig-make-backup-files 
+  c-sig は変数 make-backup-files の値ではなくこの変数の値に従って 
+  sig-alist-file のバックアップファイルを作成するかどうかを決定します。
+  t なら作成し、nil ならしません。
+  デフォルトは t
+
+sig-end-of-headers
+  c-sig が header の終了を認識するための正規表現です。特殊な mailer を
+  使用している人は変更してください。
+  デフォルトは "^$\\|^--"
+
+sig-search-functions
+  デフォルトの signature を検索する関数の list。
+  デフォルトは (list 'sig-search-name-alist 'sig-search-regexp) で、ま
+  ずデータベースからアドレス名をを検索し、見つからない場合は正規表現デー
+  タベースを検索します。それでも見つからない場合はデフォルトの 
+  signature 名を使用します。
+  'sig-get-random-signature を最後につけると正規表現データベースでもマッ
+  チングしなかった場合、ランダムに signature を選択します。
+
+sig-random-sig-list
+  insert-signature-randomly または sig-get-random-signature は 
+  signature の list の中からランダムに signature を選択します。
+  しかし、sig-random-sig-list に signature 名の list が設定されていた
+  場合、その中からランダムに signature を選択します。
+  デフォルトは nil
+
+sig-alist-file
+  データベースなどを格納するファイル名。
+  デフォルトは "~/.signature.alist"
+
+sig-replace-string-file
+  置換文字列を格納するファイル名。
+  デフォルトは "~/.signature.replace"
+
+
+sig-regexp-alist
+  正規表現データベース。~/.signature.alist に格納されます。
+
+	設定例
+(setq sig-regexp-alist 
+      '(("To"
+	 ("jp$" . "Japanese")
+	 ("com$" . "English"))
+	("Newsgroups"
+	 ("^fj" . "japanese")
+	 ("^comp" . "English"))))
+
+
+６. ユーザが設定可能な関数
+
+sig-filter-function
+  この関数が宣言されていると signature の挿入時に signature 自身を引数
+としてこの関数が呼ばれ、戻りを signature として挿入します。デフォルト
+では宣言されていません。
+  filter function はもともとは「ランダムに signature の内容を書き換え
+る」という機能のために作成しましたが、その後その機能をデフォルトで実装
+してしまったため、現在はどのような価値があるのか良く分りません。でも、
+この機能があれば外部コマンドを実行し、その出力を signature に取り込む
+こともできるので、そういうことをしようという強者がいればそれなりに便利
+だと思います。
+
+  sig-filter-function の記述例
+
+  以下のような関数を宣言しておくと signature 中の %name% という文字列
+を名前に、%title% という文字列を肩書に変換することができます。
+
+(defun   sig-filter-function (sig)
+  (let ((work)
+	(buffer (get-buffer-create "*temp buffer*")))
+    (save-excursion
+      (set-buffer buffer)
+      (erase-buffer)
+      (insert-string sig)
+      (goto-char (point-min))
+      (replace-string "%name%" "自分の名前")
+      (goto-char (point-min))
+      (replace-string "%title%" "自分の肩書")
+      (setq work (buffer-substring (point-min) (point-max)))
+      (kill-buffer buffer)
+      work)))
+
+  c-sig には既に上記の機能があるので実用性はありません。（悪い例で申し
+訳ない）
+
+
+７.配布について
+
+  c-sig は GNU General Public License で配布していますので煮て食おうが
+焼いて食おうが自由と言えば自由です。GNU General Public License って何？
+という人はこれを機会にちょっと読んでみてください。
+
+
+８. 後書き
+
+  思えば c-sig を作りはじめたのは……いつだったかなぁ。最初は自分のた
+めだけにこっそり書いていたのですが、うっかりあるＭＬのオフミで「こんな 
+lisp を書いているんだ」と口を滑らせたのがきっかけで、マイナーに公開す
+るはめになり、その後、徐々に機能を増やしていきました。
+  何度か net news  に流そうと思ったのですが、もう少し機能を追加したい
+とか、ドキュメントを丁寧に書きたいとか、似たような lisp が出回っている
+とかで思いためらっていました。
+  結局、3.7 beta を fj.sources に流したんですが、その後、ずっとメンテ
+をしないでいました。どうもすみません。
+
+  なお、c-sig の公式ホームページが一応あります。
+  http://www.threeweb.ad.jp/~kshibata/c-sig ですが、滅多に更新されませ
+ん。
+  あ、いや。今後はまめにアップデートします。
+--
+(defvar after-five-hook				;	    柴田 健
+  '((lambda ()					;
+      (while (<= (current-time) mid-night)	;    kshibata@tky.3web.ne.jp
+	(drink beer)))))			;
