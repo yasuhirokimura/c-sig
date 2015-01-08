@@ -255,7 +255,7 @@ to the head of sig-alist."
 	    (progn
 	      (backward-char)
 	      (while (eq (preceding-char) ?\n)
-		(delete-backward-char 1)))
+		(delete-char 1)))
 	  (insert "\n"))
 	(if (stringp sig-purge)
 	    (progn
@@ -284,7 +284,7 @@ to the head of sig-alist."
 	(if sig-alist
 	    (progn
 	      (insert "(setq sig-alist '(\n")
-	      (mapcar '(lambda (element)
+	      (mapc #'(lambda (element)
 			 (insert "( "
 				 (prin1-to-string (car element))
 				 " .\n"
@@ -299,7 +299,7 @@ to the head of sig-alist."
 	(if sig-name-alist
 	    (progn
 	      (insert "(setq sig-name-alist '(\n")
-	      (mapcar '(lambda (element)
+	      (mapc #'(lambda (element)
 			 (insert (prin1-to-string element) "\n"))
 		      sig-name-alist)
 	      (insert "))\n"))
@@ -310,9 +310,9 @@ to the head of sig-alist."
 	(if sig-regexp-alist
 	    (progn
 	      (insert "(setq sig-regexp-alist '(\n")
-	      (mapcar '(lambda (element)
+	      (mapc #'(lambda (element)
 			 (insert "(" (prin1-to-string (car element)) "\n")
-			 (mapcar '(lambda (element2)
+			 (mapc #'(lambda (element2)
 				    (insert "\t" (prin1-to-string element2)
 					      "\n"))
 				 (cdr element))
@@ -355,7 +355,7 @@ to the head of sig-alist."
 
 (defun sig-eref-show (&optional arg)
   "Show reference INDEX in sc-rewrite-header-list."
-  (save-excursion
+  (with-current-buffer
     (set-buffer sig-buffer-name)
     (let ((buffer-read-only nil))
       (erase-buffer)
@@ -405,7 +405,7 @@ to the head of sig-alist."
 (defun save-signature ()
   ""
   (interactive)
-  (let* ((sig-name (read-input sig-msg1 "")))
+  (let* ((sig-name (read-string sig-msg1 "")))
     (if (string= sig-name "")
 	(error sig-msg2)
       (if (and (cdr (assoc sig-name sig-alist))
