@@ -3,7 +3,8 @@ INSTALL?=	install
 MKDIR?=		mkdir -p
 RM?=		rm -f
 
-PREFIX?=	/usr/local
+PREFIX?=	$(shell $(EMACS) -Q --batch --eval \
+		"(princ (expand-file-name \"../../../..\" data-directory))")
 LISPDIR?=	${PREFIX}/share/emacs/site-lisp
 
 TARGETS=	c-sig.el c-sig.elc
